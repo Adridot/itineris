@@ -1,0 +1,9 @@
+{
+  "name": "Itineris",
+  "description": "Find the travel time to many destinations from one place!",
+  "version": "0.1",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  }
+}
