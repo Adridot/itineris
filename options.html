@@ -6,14 +6,48 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Options</title>
-    <link rel="stylesheet" href="button.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link href="/assets/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="options.css">
+    <meta http-equiv="Content-Security-Policy" content="default-src * self blob: data: gap:; style-src * self 'unsafe-inline' blob: data: gap:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; object-src * 'self' blob: data: gap:; img-src * self 'unsafe-inline' blob: data: gap:; connect-src self * 'unsafe-inline' blob: data: gap:; frame-src * self blob: data: gap:;">
+    <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZ7GJvk_jSSvZbkOaJ23ilG3EHKo4Cv7I&libraries=places">
+    </script>
 </head>
 <body>
-<div id="buttonDiv">
-</div>
-<div>
-    <p>Choose a different background color!</p>
-</div>
+<section class="section">
+    <div class="container">
+        <h1 class="title">
+            Saved addresses
+        </h1>
+
+        <div id="add_container">
+
+            <button class="button is-success is-outlined">
+                <span>Add</span>
+                <span class="icon is-small">
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+            </button>
+        </div>
+
+        <div class="box">
+            <p id="no_address_message" class="subtitle is-hidden">No address saved. Add one using the "Add" button</p>
+            <table id="table" class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="table_body">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 <script src="options.js"></script>
 </body>
 </html>
