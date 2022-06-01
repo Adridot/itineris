@@ -9,10 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link href="/assets/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="options.css">
-    <meta http-equiv="Content-Security-Policy" content="default-src * self blob: data: gap:; style-src * self 'unsafe-inline' blob: data: gap:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; object-src * 'self' blob: data: gap:; img-src * self 'unsafe-inline' blob: data: gap:; connect-src self * 'unsafe-inline' blob: data: gap:; frame-src * self blob: data: gap:;">
-    <script async
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZ7GJvk_jSSvZbkOaJ23ilG3EHKo4Cv7I&libraries=places">
-    </script>
+    <script src="autocomplete.js"></script>
 </head>
 <body>
 <section class="section">
@@ -22,7 +19,7 @@
         </h1>
 
         <div id="add_container">
-
+            <input id="autocomplete_input" type="text">
             <button class="button is-success is-outlined">
                 <span>Add</span>
                 <span class="icon is-small">
@@ -49,5 +46,6 @@
     </div>
 </section>
 <script src="options.js"></script>
+<script id="google_autocomplete"></script>
 </body>
 </html>
