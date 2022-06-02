@@ -10,3 +10,7 @@
     text-align: center;
     margin: 0;
 }
+
+.delete_button{
+    text-align: right;
+}

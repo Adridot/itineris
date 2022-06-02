@@ -1,0 +1,545 @@
+{
+   "geocoded_waypoints" : [
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJt64QHwRl5kcR_Vizm6_QuTo",
+         "types" : [ "bank", "establishment", "finance", "point_of_interest" ]
+      },
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJyxfoIthx5kcRmwYD0yuy0Xg",
+         "types" : [ "neighborhood", "political" ]
+      }
+   ],
+   "routes" : [
+      {
+         "bounds" : {
+            "northeast" : {
+               "lat" : 48.8925415,
+               "lng" : 2.3480936
+            },
+            "southwest" : {
+               "lat" : 48.8521378,
+               "lng" : 2.2311542
+            }
+         },
+         "copyrights" : "Map data ©2022 Google",
+         "legs" : [
+            {
+               "arrival_time" : {
+                  "text" : "20:14",
+                  "time_zone" : "Europe/Paris",
+                  "value" : 1654193666
+               },
+               "departure_time" : {
+                  "text" : "19:45",
+                  "time_zone" : "Europe/Paris",
+                  "value" : 1654191949
+               },
+               "distance" : {
+                  "text" : "11,9 km",
+                  "value" : 11913
+               },
+               "duration" : {
+                  "text" : "29 minutes",
+                  "value" : 1717
+               },
+               "end_address" : "Quartier Saint-Germain-des-Prés, 75006 Paris, France",
+               "end_location" : {
+                  "lat" : 48.853737,
+                  "lng" : 2.3331573
+               },
+               "start_address" : "17 Cr Valmy, 92800 Puteaux, France",
+               "start_location" : {
+                  "lat" : 48.8922963,
+                  "lng" : 2.2311542
+               },
+               "steps" : [
+                  {
+                     "distance" : {
+                        "text" : "0,5 km",
+                        "value" : 499
+                     },
+                     "duration" : {
+                        "text" : "7 minutes",
+                        "value" : 431
+                     },
+                     "end_location" : {
+                        "lat" : 48.89184179999999,
+                        "lng" : 2.2371686
+                     },
+                     "html_instructions" : "Marcher jusqu'à La Défense",
+                     "polyline" : {
+                        "points" : "{gliHuwrLBK@CBKBM@K?C@E?C@I?A?G?a@?AAs@?CCWE[Is@?AQgBAAGq@?CGi@AM?K?K@GBEBCQS@C@GFYDMHa@DOHa@Ti@DMHSBMLo@Nq@Lq@Nq@Jc@Jq@F[_@WEEKGEC@ELq@@C"
+                     },
+                     "start_location" : {
+                        "lat" : 48.8922963,
+                        "lng" : 2.2311542
+                     },
+                     "steps" : [
+                        {
+                           "distance" : {
+                              "text" : "0,2 km",
+                              "value" : 207
+                           },
+                           "duration" : {
+                              "text" : "4 minutes",
+                              "value" : 219
+                           },
+                           "end_location" : {
+                              "lat" : 48.8924538,
+                              "lng" : 2.2338723
+                           },
+                           "html_instructions" : "Prendre la direction \u003cb\u003esud-est\u003c/b\u003e sur \u003cb\u003eCr Valmy\u003c/b\u003e vers \u003cb\u003ePass. des 3 Places\u003c/b\u003e",
+                           "polyline" : {
+                              "points" : "{gliHuwrLBK@CBKBM@K?C@E?C@I?A?G?a@?AAs@?CCWE[Is@?AQgBAAGq@?CGi@AM?K?K@GBEBC"
+                           },
+                           "start_location" : {
+                              "lat" : 48.8922963,
+                              "lng" : 2.2311542
+                           },
+                           "travel_mode" : "WALKING"
+                        },
+                        {
+                           "distance" : {
+                              "text" : "12 m",
+                              "value" : 12
+                           },
+                           "duration" : {
+                              "text" : "1 minute",
+                              "value" : 9
+                           },
+                           "end_location" : {
+                              "lat" : 48.8925415,
+                              "lng" : 2.2339707
+                           },
+                           "html_instructions" : "Tourner à \u003cb\u003egauche\u003c/b\u003e vers \u003cb\u003eParv. de l'Arche de la Défense\u003c/b\u003e",
+                           "maneuver" : "turn-left",
+                           "polyline" : {
+                              "points" : "yhliHuhsLQS"
+                           },
+                           "start_location" : {
+                              "lat" : 48.8924538,
+                              "lng" : 2.2338723
+                           },
+                           "travel_mode" : "WALKING"
+                        },
+                        {
+                           "distance" : {
+                              "text" : "0,2 km",
+                              "value" : 221
+                           },
+                           "duration" : {
+                              "text" : "3 minutes",
+                              "value" : 162
+                           },
+                           "end_location" : {
+                              "lat" : 48.891647,
+                              "lng" : 2.236664
+                           },
+                           "html_instructions" : "Prendre \u003cb\u003eà droite\u003c/b\u003e sur \u003cb\u003eParv. de l'Arche de la Défense\u003c/b\u003e",
+                           "maneuver" : "turn-right",
+                           "polyline" : {
+                              "points" : "kiliHiisL@C@GFYDMHa@DOHa@Ti@DMHSBMLo@Nq@Lq@Nq@Jc@Jq@F["
+                           },
+                           "start_location" : {
+                              "lat" : 48.8925415,
+                              "lng" : 2.2339707
+                           },
+                           "travel_mode" : "WALKING"
+                        },
+                        {
+                           "distance" : {
+                              "text" : "35 m",
+                              "value" : 35
+                           },
+                           "duration" : {
+                              "text" : "1 minute",
+                              "value" : 25
+                           },
+                           "end_location" : {
+                              "lat" : 48.8919307,
+                              "lng" : 2.236869
+                           },
+                           "html_instructions" : "Prendre \u003cb\u003eà gauche\u003c/b\u003e sur \u003cb\u003eLe Parvis\u003c/b\u003e/\u003cwbr/\u003e\u003cb\u003eParv. de l'arche\u003c/b\u003e",
+                           "maneuver" : "turn-left",
+                           "polyline" : {
+                              "points" : "ycliHczsL_@WEEKGEC"
+                           },
+                           "start_location" : {
+                              "lat" : 48.891647,
+                              "lng" : 2.236664
+                           },
+                           "travel_mode" : "WALKING"
+                        },
+                        {
+                           "distance" : {
+                              "text" : "24 m",
+                              "value" : 24
+                           },
+                           "duration" : {
+                              "text" : "1 minute",
+                              "value" : 16
+                           },
+                           "end_location" : {
+                              "lat" : 48.89184179999999,
+                              "lng" : 2.2371686
+                           },
+                           "html_instructions" : "Tourner à \u003cb\u003edroite\u003c/b\u003e",
+                           "maneuver" : "turn-right",
+                           "polyline" : {
+                              "points" : "qeliHm{sL@ELq@@C"
+                           },
+                           "start_location" : {
+                              "lat" : 48.8919307,
+                              "lng" : 2.236869
+                           },
+                           "travel_mode" : "WALKING"
+                        }
+                     ],
+                     "travel_mode" : "WALKING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "9,2 km",
+                        "value" : 9178
+                     },
+                     "duration" : {
+                        "text" : "9 minutes",
+                        "value" : 540
+                     },
+                     "end_location" : {
+                        "lat" : 48.86175,
+                        "lng" : 2.34698
+                     },
+                     "html_instructions" : "Train vers Torcy",
+                     "polyline" : {
+                        "points" : "mgliHibtLp@b@zAiHt@eDH_@Ha@Nq@No@Jc@BMNo@Nq@DU^aBNq@No@Nq@No@^aBNq@\\aBNq@DKHc@Nq@\\aB^cBjAwFNo@BOHa@\\cB^aB\\cB\\aBNo@?ANq@No@FW\\cAR}@Nq@No@\\cB^aBFWFW|AkHNo@^cB^aBDUFWh@aCfIi_@jDaPlAsFxEoTlEiS|AcHNq@~DqQjCuLnAyFh@{BR_AR}@f@mCVwAR}@^aBl@sC^aBl@sC^_BlC}Ll@sC^aBjBuINo@Ns@^_B^aB\\cB^aBNo@ZaBJsAaAU@MHaHbAcsAv@}`A\\eJxDqk@NqB\\mEdE_d@v@oG`AuE~@_EhAyCxBwDvBgDtBiCjBaBxAgAtA{@bBy@lAg@hA]NGpCq@`Ck@NEpGuB|@YfA]JE@J"
+                     },
+                     "start_location" : {
+                        "lat" : 48.89223,
+                        "lng" : 2.23797
+                     },
+                     "transit_details" : {
+                        "arrival_stop" : {
+                           "location" : {
+                              "lat" : 48.86175,
+                              "lng" : 2.34698
+                           },
+                           "name" : "Châtelet-Les Halles"
+                        },
+                        "arrival_time" : {
+                           "text" : "20:02",
+                           "time_zone" : "Europe/Paris",
+                           "value" : 1654192920
+                        },
+                        "departure_stop" : {
+                           "location" : {
+                              "lat" : 48.89223,
+                              "lng" : 2.23797
+                           },
+                           "name" : "La Défense"
+                        },
+                        "departure_time" : {
+                           "text" : "19:53",
+                           "time_zone" : "Europe/Paris",
+                           "value" : 1654192380
+                        },
+                        "headsign" : "Torcy",
+                        "line" : {
+                           "agencies" : [
+                              {
+                                 "name" : "Île-de-France Mobilités",
+                                 "url" : "https://www.iledefrance-mobilites.fr/"
+                              }
+                           ],
+                           "color" : "#f23f39",
+                           "name" : "Ligne A du RER d'Île-de-France",
+                           "short_name" : "RER A",
+                           "text_color" : "#ffffff",
+                           "vehicle" : {
+                              "icon" : "//maps.gstatic.com/mapfiles/transit/iw2/6/rail2.png",
+                              "local_icon" : "//maps.gstatic.com/mapfiles/transit/iw2/6/fr-paris-rail.png",
+                              "name" : "Train",
+                              "type" : "HEAVY_RAIL"
+                           }
+                        },
+                        "num_stops" : 3
+                     },
+                     "travel_mode" : "TRANSIT"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0,1 km",
+                        "value" : 112
+                     },
+                     "duration" : {
+                        "text" : "3 minutes",
+                        "value" : 197
+                     },
+                     "end_location" : {
+                        "lat" : 48.86253,
+                        "lng" : 2.34601
+                     },
+                     "html_instructions" : "Marcher jusqu'à Les Halles",
+                     "polyline" : {
+                        "points" : "}hfiHskiM{C`E"
+                     },
+                     "start_location" : {
+                        "lat" : 48.86175,
+                        "lng" : 2.34698
+                     },
+                     "steps" : [
+                        {
+                           "distance" : {
+                              "text" : "1 m",
+                              "value" : 0
+                           },
+                           "duration" : {
+                              "text" : "2 minutes",
+                              "value" : 102
+                           },
+                           "end_location" : {
+                              "lat" : 48.86175,
+                              "lng" : 2.34698
+                           },
+                           "html_instructions" : "Prendre la sortie \u003cspan class=\"location\"\u003eForum - Pte Rambuteau\u003c/span\u003e",
+                           "polyline" : {
+                              "points" : "}hfiHskiM"
+                           },
+                           "start_location" : {
+                              "lat" : 48.86175,
+                              "lng" : 2.34698
+                           },
+                           "travel_mode" : "WALKING"
+                        },
+                        {
+                           "distance" : {
+                              "text" : "0,1 km",
+                              "value" : 112
+                           },
+                           "duration" : {
+                              "text" : "2 minutes",
+                              "value" : 95
+                           },
+                           "end_location" : {
+                              "lat" : 48.86253,
+                              "lng" : 2.34601
+                           },
+                           "polyline" : {
+                              "points" : "}hfiHskiM{C`E"
+                           },
+                           "start_location" : {
+                              "lat" : 48.86175,
+                              "lng" : 2.34698
+                           },
+                           "travel_mode" : "WALKING"
+                        }
+                     ],
+                     "travel_mode" : "WALKING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "2,1 km",
+                        "value" : 2051
+                     },
+                     "duration" : {
+                        "text" : "5 minutes",
+                        "value" : 300
+                     },
+                     "end_location" : {
+                        "lat" : 48.85367,
+                        "lng" : 2.33399
+                     },
+                     "html_instructions" : "Métro vers Bagneux - Lucie Aubrac",
+                     "polyline" : {
+                        "points" : "ymfiHqeiMr@qEfBz@z@R|@Lv@FB?J?J@@?N?j@Cn@G@?jAYNKz@k@lAy@BADCPIXObAO~@QbDs@xCg@r@Dn@VnBn@`Al@`@TDBh@Z`@\\b@x@Tp@DRJ\\Pr@d@tBZbBBPDPDPNn@RhABLd@tAj@dBrA~Cl@zBl@|D@vB?FE^Mz@oAhI}AdK_BpKOI"
+                     },
+                     "start_location" : {
+                        "lat" : 48.86253,
+                        "lng" : 2.34601
+                     },
+                     "transit_details" : {
+                        "arrival_stop" : {
+                           "location" : {
+                              "lat" : 48.85367,
+                              "lng" : 2.33399
+                           },
+                           "name" : "Saint-Germain-des-Prés"
+                        },
+                        "arrival_time" : {
+                           "text" : "20:13",
+                           "time_zone" : "Europe/Paris",
+                           "value" : 1654193580
+                        },
+                        "departure_stop" : {
+                           "location" : {
+                              "lat" : 48.86253,
+                              "lng" : 2.34601
+                           },
+                           "name" : "Les Halles"
+                        },
+                        "departure_time" : {
+                           "text" : "20:08",
+                           "time_zone" : "Europe/Paris",
+                           "value" : 1654193280
+                        },
+                        "headsign" : "Bagneux - Lucie Aubrac",
+                        "line" : {
+                           "agencies" : [
+                              {
+                                 "name" : "Île-de-France Mobilités",
+                                 "url" : "https://www.iledefrance-mobilites.fr/"
+                              }
+                           ],
+                           "color" : "#cf009e",
+                           "name" : "Ligne 4 du métro de Paris",
+                           "short_name" : "4",
+                           "text_color" : "#ffffff",
+                           "vehicle" : {
+                              "icon" : "//maps.gstatic.com/mapfiles/transit/iw2/6/subway2.png",
+                              "local_icon" : "//maps.gstatic.com/mapfiles/transit/iw2/6/fr-paris-metro.png",
+                              "name" : "Métro",
+                              "type" : "SUBWAY"
+                           }
+                        },
+                        "num_stops" : 5
+                     },
+                     "travel_mode" : "TRANSIT"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "73 m",
+                        "value" : 73
+                     },
+                     "duration" : {
+                        "text" : "1 minute",
+                        "value" : 80
+                     },
+                     "end_location" : {
+                        "lat" : 48.853737,
+                        "lng" : 2.3331573
+                     },
+                     "html_instructions" : "Marcher jusqu'à Quartier Saint-Germain-des-Prés, 75006 Paris, France",
+                     "polyline" : {
+                        "points" : "mvdiHmzfMa@`@FBKp@E@El@b@\\"
+                     },
+                     "start_location" : {
+                        "lat" : 48.85367,
+                        "lng" : 2.33399
+                     },
+                     "steps" : [
+                        {
+                           "distance" : {
+                              "text" : "22 m",
+                              "value" : 22
+                           },
+                           "duration" : {
+                              "text" : "1 minute",
+                              "value" : 23
+                           },
+                           "end_location" : {
+                              "lat" : 48.853838,
+                              "lng" : 2.333816
+                           },
+                           "html_instructions" : "Prendre la sortie \u003cspan class=\"location\"\u003eÉglise Saint-Germain-des-Prés\u003c/span\u003e",
+                           "polyline" : {
+                              "points" : "mvdiHmzfMa@`@"
+                           },
+                           "start_location" : {
+                              "lat" : 48.85367,
+                              "lng" : 2.33399
+                           },
+                           "travel_mode" : "WALKING"
+                        },
+                        {
+                           "distance" : {
+                              "text" : "25 m",
+                              "value" : 25
+                           },
+                           "duration" : {
+                              "text" : "1 minute",
+                              "value" : 18
+                           },
+                           "end_location" : {
+                              "lat" : 48.8538605,
+                              "lng" : 2.3335484
+                           },
+                           "html_instructions" : "Prendre la direction \u003cb\u003eouest\u003c/b\u003e sur \u003cb\u003eBd Saint-Germain\u003c/b\u003e vers \u003cb\u003eRue Bonaparte\u003c/b\u003e",
+                           "polyline" : {
+                              "points" : "gwdiHgyfMKp@"
+                           },
+                           "start_location" : {
+                              "lat" : 48.8538009,
+                              "lng" : 2.3337954
+                           },
+                           "travel_mode" : "WALKING"
+                        },
+                        {
+                           "distance" : {
+                              "text" : "13 m",
+                              "value" : 13
+                           },
+                           "duration" : {
+                              "text" : "1 minute",
+                              "value" : 9
+                           },
+                           "end_location" : {
+                              "lat" : 48.8539173,
+                              "lng" : 2.3333109
+                           },
+                           "html_instructions" : "Prendre \u003cb\u003eà droite\u003c/b\u003e sur \u003cb\u003ePl. Saint-Germain des Prés\u003c/b\u003e",
+                           "maneuver" : "turn-right",
+                           "polyline" : {
+                              "points" : "swdiHuwfME@El@"
+                           },
+                           "start_location" : {
+                              "lat" : 48.8538605,
+                              "lng" : 2.3335484
+                           },
+                           "travel_mode" : "WALKING"
+                        },
+                        {
+                           "distance" : {
+                              "text" : "13 m",
+                              "value" : 13
+                           },
+                           "duration" : {
+                              "text" : "1 minute",
+                              "value" : 30
+                           },
+                           "end_location" : {
+                              "lat" : 48.853737,
+                              "lng" : 2.3331573
+                           },
+                           "html_instructions" : "Prendre \u003cb\u003eà gauche\u003c/b\u003e sur \u003cb\u003eRue de Rennes\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eVotre destination se trouvera sur la gauche.\u003c/div\u003e",
+                           "maneuver" : "turn-left",
+                           "polyline" : {
+                              "points" : "_xdiHevfMb@\\"
+                           },
+                           "start_location" : {
+                              "lat" : 48.8539173,
+                              "lng" : 2.3333109
+                           },
+                           "travel_mode" : "WALKING"
+                        }
+                     ],
+                     "travel_mode" : "WALKING"
+                  }
+               ],
+               "traffic_speed_entry" : [],
+               "via_waypoint" : []
+            }
+         ],
+         "overview_polyline" : {
+            "points" : "{gliHuwrLPcA@u@EqAs@{GAY@SBEBCQSBKLg@Nq@^kANa@P}@x@yDRmAe@]QKNw@kAcDp@b@zAiH~@eEXsAn@qCdA{ErCeMjJuc@d@{Ab@oBtAmGlFiVzWomAzNqp@xGkZfBaJvK_g@xGqZZaBJsAaAU@MHaHbAcsAv@}`A\\eJhEco@\\mEdE_d@v@oG`AuE~@_EhAyCxBwDvBgDtBiCjBaBnDcCbBy@lAg@xAe@rG}AfLsDJE@J{C`Er@qEfBz@z@RtBTZ@P?zAKlAYjAw@hBiAXObAO~@QbDs@xCg@r@D~CfArCbB`@\\b@x@ZdA\\pA`AxE^dBVvApAzDrA~Cl@zBl@|D@vBEf@}AdK}DvWOIa@`@FBKp@E@El@b@\\"
+         },
+         "summary" : "",
+         "warnings" : [
+            "Le calcul d'itinéraires piétons est en bêta. Faites attention – Cet itinéraire n'est peut-être pas complètement aménagé pour les piétons."
+         ],
+         "waypoint_order" : []
+      }
+   ],
+   "status" : "OK"
+}

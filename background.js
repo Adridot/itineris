@@ -1,8 +1,20 @@
-let address_list = [{
-    name: "John Doe", address: "37 rue ronald mcdonald 75002 Paris",
-}, {
-    name: "Jane Doe", address: "37 rue ronald mcdonald 75002 Paris",
-}];
+let address_list = [
+    {
+        id: 1,
+        name: "Maison",
+        address: "37 rue Rémy Dumoncel 77210 Avon",
+    },
+    {
+        id: 2,
+        name: "Ecole",
+        address: "CYTech Cergy",
+    },
+    {
+        id: 3,
+        name: "Travail SG",
+        address: "Tours Société Générale La Défense",
+    },
+    ];
 
 chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.sync.set({address_list});
