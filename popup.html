@@ -6,10 +6,109 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="button.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link href="/assets/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-<button id="changeColor"></button>
+
+<div class="container">
+    <div class="columns">
+        <div class="column">
+            <div id="transport_mode_container" class="box">
+                <label class="label" for="transport_mode_select">Transport mode</label>
+                <div class="select">
+                    <select name="Transport mode" id="transport_mode_select">
+                        <option value="transit">Public transport</option>
+                        <option value="driving">Driving</option>
+                        <option value="walking">Walking</option>
+                        <option value="bicycling">Bicycling</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="departure_time_container" class="column">
+            <div class="box">
+                <label class="label">Departure time</label>
+                <div class="hour_columns">
+                    <div class="select">
+                        <select name="Departure hour" id="departure_hour_select">
+                            <option value="00">00</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08" selected="selected">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                        </select>
+                    </div>
+                    <div class="select">
+                        <select name="Departure minutes" id="departure_minutes_select">
+                            <option value="00">00</option>
+                            <option value="05">05</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                            <option value="35">35</option>
+                            <option value="40">40</option>
+                            <option value="45">45</option>
+                            <option value="50">50</option>
+                            <option value="55">55</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="setup_container" class="column">
+            <div class="box">
+                <label class="label" for="transport_mode_select">Setup addresses</label>
+                <button id="setup_button" class="button is-fullwidth">
+                    <span class="icon">
+                        <i class="fa-solid fa-gear"></i>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        <input id="address" class="input" type="text" placeholder="Enter an address">
+        <button id="address_button" class="button is-fullwidth is-primary">Compute travel times</button>
+    </div>
+    <div id="results_container" class="box is-hidden content">
+        <blockquote id="current_origin_address" ></blockquote>
+        <div id="results_table_container" class="table-container">
+            <table id="results_table" class="table is-fullwidth is-striped is-hoverable">
+                <thead>
+                <tr>
+                    <th>Address</th>
+                    <th>Travel time</th>
+                </tr>
+                </thead>
+                <tbody id="results_table_body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 <script src="popup.js"></script>
 </body>
 </html>

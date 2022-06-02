@@ -1,0 +1,42 @@
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.container {
+    margin: 1rem
+}
+
+.columns {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.column {
+    flex-basis: 100%;
+    width: 15rem;
+    text-align: center;
+}
+
+.hour_columns {
+    display: flex;
+    justify-content: center;
+}
+
+#address {
+    margin-bottom: 0.5rem;
+}
+
+.content blockquote {
+    padding: 1em 1.5em;
+}
+
