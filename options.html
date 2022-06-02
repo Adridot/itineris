@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link href="/assets/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="options.css">
-    <script src="autocomplete.js"></script>
 </head>
 <body>
 <section class="section">
@@ -18,15 +17,27 @@
             Saved addresses
         </h1>
 
-        <div id="add_container">
-            <input id="autocomplete_input" type="text">
-            <button class="button is-success is-outlined">
+        <div class="box" id="add_container">
+            <div class="field">
+                <label class="label" for="name_input">Name</label>
+                <div class="control">
+                    <input class="input" id="name_input" type="text">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="address_input">Address</label>
+                <div class="control">
+                    <input class="input" id="address_input" type="text">
+                </div>
+            </div>
+            <button id="add_button" class="button is-success is-outlined">
                 <span>Add</span>
                 <span class="icon is-small">
                     <i class="fa-solid fa-plus"></i>
                 </span>
             </button>
         </div>
+
 
         <div class="box">
             <p id="no_address_message" class="subtitle is-hidden">No address saved. Add one using the "Add" button</p>
@@ -45,7 +56,8 @@
         </div>
     </div>
 </section>
+<script src="autocomplete.js"></script>
 <script src="options.js"></script>
-<script id="google_autocomplete"></script>
+<script id="google_autocomplete" defer></script>
 </body>
 </html>
