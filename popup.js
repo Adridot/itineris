@@ -6,17 +6,16 @@ function clearTable() {
     document.getElementById("results_table_body").innerHTML = "";
 }
 
-function clearDestinations() {
-    chrome.storage.sync.set({distances: {origin: "", destinations: []}});
-    updateTable();
-}
-
 function getDate(hours, minutes) {
     let today = new Date();
     today.setHours(hours);
     today.setMinutes(minutes);
 
-    return Math.round(today.getTime()/1000);
+    return Math.round(today.getTime() / 1000);
+}
+
+function toggleLoading() {
+    document.getElementById("address_button").classList.toggle('is-loading');
 }
 
 function distancesToHTML(distances) {
@@ -42,6 +41,46 @@ function updateTable() {
             document.getElementById("current_origin_address").innerHTML = `The selected address is: <b>${distances.origin}</b>`;
             distancesToHTML(distances);
         }
+    });
+}
+
+
+async function callAPI(origin, destination, transport_mode, departure_time) {
+    message = {
+        name: "distance",
+        origin: encodeURIComponent(origin),
+        destination: encodeURIComponent(destination),
+        transport_mode: encodeURIComponent(transport_mode),
+        departure_time: encodeURIComponent(departure_time)
+    }
+    return new Promise((resolve) => {
+        chrome.runtime.sendMessage(message, (response) => {
+            resolve(response);
+        });
+    });
+}
+
+async function extractTravelTime(origin, destination, transport_mode, departure_time) {
+    const apiResponse = await callAPI(origin, destination, transport_mode, departure_time);
+    if (apiResponse.status === "OK") {
+        return apiResponse.routes[0].legs[0].duration.text;
+    } else {
+        return "Error: " + apiResponse.status;
+    }
+}
+
+function getTravelTimes(origin, transport_mode, departure_time) {
+    let destinations = []
+    toggleLoading();
+    chrome.storage.sync.get("address_list", async ({address_list}) => {
+        for (let address_elem of address_list) {
+            let travel_time = await extractTravelTime(origin, address_elem.address, transport_mode, departure_time);
+            destinations.push({name: address_elem.name, travel_time: travel_time});
+        }
+        await chrome.storage.sync.set({distances: {origin: origin, destinations: destinations}}).then(() => {
+            updateTable();
+            toggleLoading();
+        });
     });
 }
 
@@ -72,43 +111,6 @@ document.getElementById("address_button").addEventListener("click", () => {
         let minutes = document.getElementById("departure_minutes_select").value;
         departure_time = getDate(hour, minutes);
     }
+    address_input.value = "";
     getTravelTimes(address, transport_mode, departure_time);
 });
-
-function getTravelTimes(origin, transport_mode, departure_time) {
-    let destinations = []
-    chrome.storage.sync.get("address_list", ({address_list}) => {
-        for (let address_elem of address_list) {
-            console.log(origin, address_elem.address, transport_mode, departure_time)
-            let travel_time = extractTravelTime(origin, address_elem.address, transport_mode, departure_time);
-            destinations.push({name: address_elem.name, travel_time: travel_time});
-        }
-    });
-    chrome.storage.sync.get("distances", ({distances}) => {
-        distances.origin = origin;
-        distances.destinations = destinations;
-        chrome.storage.sync.set({distances: distances});
-    });
-    updateTable();
-}
-
-async function extractTravelTime(origin, destination, transport_mode, departure_time) {
-    const apiResponse = await callAPI(origin, destination, transport_mode, departure_time);
-    console.log(apiResponse);
-    return apiResponse.routes[0].legs[0].duration.text;
-}
-
-
-function callAPI(origin, destination, transport_mode, departure_time) {
-    message = {
-        name: "distance",
-        origin: encodeURIComponent(origin),
-        destination: encodeURIComponent(destination),
-        transport_mode: encodeURIComponent(transport_mode),
-        departure_time: encodeURIComponent(departure_time)
-    }
-
-    chrome.runtime.sendMessage(message, (response) => {
-        return response;
-    });
-}

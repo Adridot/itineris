@@ -1,43 +1,8 @@
-let address_list = [
-    {
-        id: 1,
-        name: "Maison",
-        address: "37 rue Rémy Dumoncel 77210 Avon",
-    },
-    {
-        id: 2,
-        name: "Ecole",
-        address: "CYTech Cergy",
-    },
-    {
-        id: 3,
-        name: "Travail SG",
-        address: "Tours Société Générale La Défense",
-    },
-];
+let address_list = [];
 
 let distances = {
-    // origin: "",
-    origin: "37 rue Rémy Dumoncel 77210 Avon",
-    destinations: [
-        {
-            name: "Maison",
-            travel_time: "1 hour 30 minutes",
-        },
-        {
-            name: "Ecole",
-            travel_time: "45 minutes",
-        },
-        {
-            name: "Travail SG",
-            travel_time: "37 minutes",
-        },
-        {
-            name: "Travail SG",
-            travel_time: "37 minutes",
-        },
-    ],
-    //destinations: {name:"", travel_time:""},
+    origin: "",
+    destinations: {name:"", travel_time:""},
 }
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -47,7 +12,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.name === "distance") {
-        const apiKey = "YOUR-API-KEY-HERE";
+        const apiKey = "API-KEY";
         let params = `origin=${request.origin}&destination=${request.destination}&mode=${request.transport_mode}`
         if (request.departure_time !== "") {
             params += `&departure_time=${request.departure_time}`
@@ -61,7 +26,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 return;
             }
             response.json().then(function (data) {
-                console.log(data);
                 sendResponse(data);
             });
         })
