@@ -24,10 +24,22 @@ function distancesToHTML(distances) {
         let row = document.createElement("tr");
         let name_cell = document.createElement("td");
         let travel_time_cell = document.createElement("td");
+        let open_maps_button_cell = document.createElement("td");
+
         name_cell.innerHTML = destination.name;
         travel_time_cell.innerHTML = destination.travel_time;
+        open_maps_button_cell.innerHTML = `
+            <button id='open_maps_${destination.id}' class='open_maps_button button is-info is-outlined'>
+                <span>Open in Maps</span>
+                <span class='icon is-small'>
+                <i class='fa-solid fa-map-marked-alt'></i>
+                </span>
+            </button>`;
+        open_maps_button_cell.classList.add("has-text-centered");
+
         row.appendChild(name_cell);
         row.appendChild(travel_time_cell);
+        row.appendChild(open_maps_button_cell);
         document.getElementById("results_table_body").appendChild(row);
     }
 }
@@ -42,16 +54,34 @@ function updateTable() {
             distancesToHTML(distances);
         }
     });
+    handleOpenMapsButton()
+}
+
+function getMapsURL(origin, destination, transport_mode) {
+    let params = `origin=${origin}&destination=${destination}&travelmode=${transport_mode}`
+    return `https://www.google.com/maps/dir/?api=1&${params}`;
+}
+
+function handleOpenMapsButton() {
+    let transport_mode = document.getElementById("transport_mode_select").value;
+    chrome.storage.sync.get("distances", ({distances}) => {
+        for (let destination of distances.destinations) {
+            let button = document.getElementById(`open_maps_${destination.id}`);
+            button.addEventListener("click", () => {
+                window.open(getMapsURL(distances.origin, destination.address, transport_mode), "_blank");
+            });
+        }
+    });
 }
 
 
-async function callAPI(origin, destination, transport_mode, departure_time) {
+async function callAPI(origin, destination, transport_mode, arrival_time) {
     message = {
         name: "distance",
         origin: encodeURIComponent(origin),
         destination: encodeURIComponent(destination),
         transport_mode: encodeURIComponent(transport_mode),
-        departure_time: encodeURIComponent(departure_time)
+        arrival_time: encodeURIComponent(arrival_time)
     }
     return new Promise((resolve) => {
         chrome.runtime.sendMessage(message, (response) => {
@@ -60,8 +90,8 @@ async function callAPI(origin, destination, transport_mode, departure_time) {
     });
 }
 
-async function extractTravelTime(origin, destination, transport_mode, departure_time) {
-    const apiResponse = await callAPI(origin, destination, transport_mode, departure_time);
+async function extractTravelTime(origin, destination, transport_mode, arrival_time) {
+    const apiResponse = await callAPI(origin, destination, transport_mode, arrival_time);
     if (apiResponse.status === "OK") {
         return apiResponse.routes[0].legs[0].duration.text;
     } else {
@@ -69,13 +99,13 @@ async function extractTravelTime(origin, destination, transport_mode, departure_
     }
 }
 
-function getTravelTimes(origin, transport_mode, departure_time) {
+function getTravelTimes(origin, transport_mode, arrival_time) {
     let destinations = []
     toggleLoading();
     chrome.storage.sync.get("address_list", async ({address_list}) => {
         for (let address_elem of address_list) {
-            let travel_time = await extractTravelTime(origin, address_elem.address, transport_mode, departure_time);
-            destinations.push({name: address_elem.name, travel_time: travel_time});
+            let travel_time = await extractTravelTime(origin, address_elem.address, transport_mode, arrival_time);
+            destinations.push({id:address_elem.id, name: address_elem.name, address: address_elem.address, travel_time: travel_time});
         }
         await chrome.storage.sync.set({distances: {origin: origin, destinations: destinations}}).then(() => {
             updateTable();
@@ -87,9 +117,9 @@ function getTravelTimes(origin, transport_mode, departure_time) {
 document.getElementById("transport_mode_select").addEventListener("change", () => {
     let transport_mode = document.getElementById("transport_mode_select").value;
     if (transport_mode === "transit") {
-        document.getElementById("departure_time_container").classList.remove('is-hidden');
+        document.getElementById("arrival_time_selects").removeAttribute("disabled");
     } else {
-        document.getElementById("departure_time_container").classList.add('is-hidden');
+        document.getElementById("arrival_time_selects").setAttribute("disabled", "disabled");
     }
 });
 
@@ -105,12 +135,12 @@ document.getElementById("address_button").addEventListener("click", () => {
         return;
     }
     let transport_mode = document.getElementById("transport_mode_select").value;
-    let departure_time = ""
+    let arrival_time = ""
     if (transport_mode === "transit") {
-        let hour = document.getElementById("departure_hour_select").value;
-        let minutes = document.getElementById("departure_minutes_select").value;
-        departure_time = getDate(hour, minutes);
+        let hour = document.getElementById("arrival_hour_select").value;
+        let minutes = document.getElementById("arrival_minutes_select").value;
+        arrival_time = getDate(hour, minutes);
     }
     address_input.value = "";
-    getTravelTimes(address, transport_mode, departure_time);
+    getTravelTimes(address, transport_mode, arrival_time);
 });

@@ -15,7 +15,12 @@
 <div class="container">
     <div class="columns">
         <div class="column">
-            <div id="transport_mode_container" class="box">
+            <div id="extension_logo" class="box small">
+                <img src="assets/icons/128.png" alt="extension icon">
+            </div>
+        </div>
+        <div class="column">
+            <div id="transport_mode_container" class="box large">
                 <label class="label" for="transport_mode_select">Transport mode</label>
                 <div class="select">
                     <select name="Transport mode" id="transport_mode_select">
@@ -27,12 +32,12 @@
                 </div>
             </div>
         </div>
-        <div id="departure_time_container" class="column">
-            <div class="box">
-                <label class="label">Departure time</label>
-                <div class="hour_columns">
+        <div id="arrival_time_container" class="column">
+            <div class="box large">
+                <label class="label">Arrival time</label>
+                <fieldset id="arrival_time_selects" class="hour_columns">
                     <div class="select">
-                        <select name="Departure hour" id="departure_hour_select">
+                        <select name="Arrival hour" id="arrival_hour_select">
                             <option value="00">00</option>
                             <option value="01">01</option>
                             <option value="02">02</option>
@@ -60,27 +65,21 @@
                         </select>
                     </div>
                     <div class="select">
-                        <select name="Departure minutes" id="departure_minutes_select">
+                        <select name="Arrival minutes" id="arrival_minutes_select">
                             <option value="00">00</option>
-                            <option value="05">05</option>
                             <option value="10">10</option>
-                            <option value="15">15</option>
                             <option value="20">20</option>
-                            <option value="25">25</option>
                             <option value="30">30</option>
-                            <option value="35">35</option>
                             <option value="40">40</option>
-                            <option value="45">45</option>
                             <option value="50">50</option>
-                            <option value="55">55</option>
                         </select>
                     </div>
-                </div>
+                </fieldset>
             </div>
         </div>
         <div id="setup_container" class="column">
-            <div class="box">
-                <label class="label" for="transport_mode_select">Setup addresses</label>
+            <div class="box small">
+                <label class="label" for="transport_mode_select">Setup</label>
                 <button id="setup_button" class="button is-fullwidth">
                     <span class="icon">
                         <i class="fa-solid fa-gear"></i>
@@ -94,12 +93,12 @@
         <button id="address_button" class="button is-fullwidth is-primary">Compute travel times</button>
     </div>
     <div id="results_container" class="box is-hidden content">
-        <blockquote id="current_origin_address" ></blockquote>
+        <blockquote id="current_origin_address"></blockquote>
         <div id="results_table_container" class="table-container">
             <table id="results_table" class="table is-fullwidth is-striped is-hoverable">
                 <thead>
                 <tr>
-                    <th>Address</th>
+                    <th style="width: 310px">Address</th>
                     <th>Travel time</th>
                 </tr>
                 </thead>

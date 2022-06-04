@@ -22,14 +22,31 @@
 }
 
 .column {
-    flex-basis: 100%;
-    width: 15rem;
     text-align: center;
 }
 
-.hour_columns {
+.large{
+    width: 13rem;
+}
+
+.small{
+    width: 7rem;
+}
+
+
+
+#extension_logo{
+    height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+
+.hour_columns {
+    display: flex;
+    justify-content: space-evenly;
+
 }
 
 #address {

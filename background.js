@@ -2,7 +2,8 @@ let address_list = [];
 
 let distances = {
     origin: "",
-    destinations: {name:"", travel_time:""},
+    destinations: []
+    // {name:"", travel_time:""},
 }
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -14,10 +15,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.name === "distance") {
         const apiKey = "API-KEY";
         let params = `origin=${request.origin}&destination=${request.destination}&mode=${request.transport_mode}`
-        if (request.departure_time !== "") {
-            params += `&departure_time=${request.departure_time}`
+        if (request.arrival_time !== "") {
+            params += `&arrival_time=${request.arrival_time}`
         }
-        const url = `https://maps.googleapis.com/maps/api/directions/json?${params}&key=${apiKey}`;
+        const url = `https://maps.googleapis.com/maps/api/directions/json?${params}&language=en&key=${apiKey}`;
 
         fetch(url).then(function (response) {
             console.log(response);
