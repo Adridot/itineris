@@ -11,27 +11,31 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 
-async function getDirection(origin, destination, transport_mode, arrival_time) {
+function getDirection(origin, destination, transport_mode, arrival_time) {
     let body = {
         origin: origin,
         destination: destination,
         transport_mode: transport_mode,
         arrival_time: arrival_time
     }
-    return fetch('https://eyjh0bdqz4.execute-api.us-east-1.amazonaws.com/default/getDirections', {
+    return fetch('https://na1x86jgj8.execute-api.eu-west-3.amazonaws.com/default/directionsSecurity', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        mode: 'no-cors',
         body: JSON.stringify(body)
-    })
+    }).then(response => response.json())
+        .then(data => {
+            return data
+        })
 }
 
-chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
     if (request.name === "distance") {
-        let response = await getDirection(request.origin, request.destination, request.transport_mode, request.arrival_time)
-        console.log(await response.json())
-        sendResponse(await response.json())
+        getDirection(request.origin, request.destination, request.transport_mode, request.arrival_time)
+            .then(response => {
+                sendResponse(response);
+            })
     }
+    return true;
 });
