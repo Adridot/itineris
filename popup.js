@@ -87,7 +87,7 @@ function handleOpenMapsButton() {
 
 
 async function callAPI(origin, destination, transport_mode, arrival_time) {
-    message = {
+    let message = {
         name: "distance",
         origin: encodeURIComponent(origin),
         destination: encodeURIComponent(destination),
