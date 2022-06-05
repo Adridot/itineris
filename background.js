@@ -3,7 +3,6 @@ let address_list = [];
 let distances = {
     origin: "",
     destinations: []
-    // {name:"", travel_time:""},
 }
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -11,25 +10,28 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.sync.set({distances});
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.name === "distance") {
-        const apiKey = "API-KEY";
-        let params = `origin=${request.origin}&destination=${request.destination}&mode=${request.transport_mode}`
-        if (request.arrival_time !== "") {
-            params += `&arrival_time=${request.arrival_time}`
-        }
-        const url = `https://maps.googleapis.com/maps/api/directions/json?${params}&language=en&key=${apiKey}`;
 
-        fetch(url).then(function (response) {
-            console.log(response);
-            if (response.status !== 200) {
-                console.log(`Error: ${response.status}`);
-                return;
-            }
-            response.json().then(function (data) {
-                sendResponse(data);
-            });
-        })
+async function getDirection(origin, destination, transport_mode, arrival_time) {
+    let body = {
+        origin: origin,
+        destination: destination,
+        transport_mode: transport_mode,
+        arrival_time: arrival_time
     }
-    return true;
+    return fetch('https://eyjh0bdqz4.execute-api.us-east-1.amazonaws.com/default/getDirections', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        mode: 'no-cors',
+        body: JSON.stringify(body)
+    })
+}
+
+chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+    if (request.name === "distance") {
+        let response = await getDirection(request.origin, request.destination, request.transport_mode, request.arrival_time)
+        console.log(await response.json())
+        sendResponse(await response.json())
+    }
 });

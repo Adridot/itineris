@@ -62,14 +62,25 @@ function getMapsURL(origin, destination, transport_mode) {
     return `https://www.google.com/maps/dir/?api=1&${params}`;
 }
 
+function replaceEventListener(distances, destination, transport_mode) {
+    let button = document.getElementById(`open_maps_${destination.id}`);
+
+    // Clone the button to remove all event listeners
+    let buttonClone = button.cloneNode(true);
+    button.parentNode.replaceChild(buttonClone, button);
+
+    // Get the new button to add the right event listener
+    let newButton = document.getElementById(`open_maps_${destination.id}`);
+    newButton.addEventListener("click", () => {
+        window.open(getMapsURL(distances.origin, destination.address, transport_mode), "_blank");
+    });
+}
+
 function handleOpenMapsButton() {
     let transport_mode = document.getElementById("transport_mode_select").value;
     chrome.storage.sync.get("distances", ({distances}) => {
         for (let destination of distances.destinations) {
-            let button = document.getElementById(`open_maps_${destination.id}`);
-            button.addEventListener("click", () => {
-                window.open(getMapsURL(distances.origin, destination.address, transport_mode), "_blank");
-            });
+            replaceEventListener(distances, destination, transport_mode)
         }
     });
 }
@@ -100,17 +111,26 @@ async function extractTravelTime(origin, destination, transport_mode, arrival_ti
 }
 
 function getTravelTimes(origin, transport_mode, arrival_time) {
-    let destinations = []
-    toggleLoading();
+    let destinations = [];
     chrome.storage.sync.get("address_list", async ({address_list}) => {
-        for (let address_elem of address_list) {
-            let travel_time = await extractTravelTime(origin, address_elem.address, transport_mode, arrival_time);
-            destinations.push({id:address_elem.id, name: address_elem.name, address: address_elem.address, travel_time: travel_time});
-        }
-        await chrome.storage.sync.set({distances: {origin: origin, destinations: destinations}}).then(() => {
-            updateTable();
+        if (address_list.length === 0) {
+            alert("No addresses have been added yet.\nPlease go to the options page to add some.");
+        } else {
             toggleLoading();
-        });
+            for (let address_elem of address_list) {
+                let travel_time = await extractTravelTime(origin, address_elem.address, transport_mode, arrival_time);
+                destinations.push({
+                    id: address_elem.id,
+                    name: address_elem.name,
+                    address: address_elem.address,
+                    travel_time: travel_time
+                });
+            }
+            await chrome.storage.sync.set({distances: {origin: origin, destinations: destinations}}).then(() => {
+                updateTable();
+                toggleLoading();
+            });
+        }
     });
 }
 
@@ -121,6 +141,7 @@ document.getElementById("transport_mode_select").addEventListener("change", () =
     } else {
         document.getElementById("arrival_time_selects").setAttribute("disabled", "disabled");
     }
+    handleOpenMapsButton();
 });
 
 document.getElementById("setup_button").addEventListener("click", () => {

@@ -18,7 +18,6 @@
 .columns {
     display: flex;
     flex-direction: row;
-
 }
 
 .column {
@@ -33,20 +32,17 @@
     width: 7rem;
 }
 
-
-
 #extension_logo{
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0.75rem;
 }
-
 
 .hour_columns {
     display: flex;
     justify-content: space-evenly;
-
 }
 
 #address {
@@ -57,3 +53,19 @@
     padding: 1em 1.5em;
 }
 
+.button.is-primary{
+    background-color: #83B5D1;
+}
+
+.button.is-primary:hover{
+    background-color: #6EA0B5;
+}
+
+.button.is-primary:active{
+    background-color: #6EA0B5;
+}
+
+.button.is-primary:focus:not(:active){
+    box-shadow: 0 0 0 0.125em rgb(131 181 209 / 25%);
+
+}
