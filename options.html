@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Options</title>
+    <title>Address book</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link href="/assets/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="options.css">
@@ -15,26 +15,32 @@
     <div class="container">
         <div class="header">
             <img class="logo" src="assets/icons/128.png" alt="extension icon">
-            <h1 class="title">
-                Itineris - Setup addresses
-            </h1>
+            <div class="title_subtitle">
+                <h1 class="title">
+                    Itineris - Address book
+                </h1>
+                <h2 class="subtitle is-5">
+                    On this page, add the destinations you want to frequently go to. (ex: Work, School...)
+                </h2>
+            </div>
         </div>
+
 
         <div class="box" id="add_container">
             <div class="field">
                 <label class="label" for="name_input">Name</label>
                 <div class="control">
-                    <input class="input" id="name_input" type="text">
+                    <input class="input" id="name_input" type="text" placeholder="ex: Home">
                 </div>
             </div>
-            <div class="field">
+            <div class="field last">
                 <label class="label" for="address_input">Address</label>
                 <div class="control">
-                    <input class="input" id="address_input" type="text">
+                    <input class="input" id="address_input" type="text" placeholder="ex: 2 rue de la Paix 75002 Paris">
                 </div>
             </div>
             <button id="add_button" class="button is-success is-outlined">
-                <span>Add</span>
+                <span>Add new address</span>
                 <span class="icon is-small">
                     <i class="fa-solid fa-plus"></i>
                 </span>

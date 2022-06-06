@@ -114,7 +114,7 @@ function getTravelTimes(origin, transport_mode, arrival_time) {
     let destinations = [];
     chrome.storage.sync.get("address_list", async ({address_list}) => {
         if (address_list.length === 0) {
-            alert("No addresses have been added yet.\nPlease go to the options page to add some.");
+            alert("No addresses have been added yet.\nGo to the top-right corner button to add addresses.");
         } else {
             toggleLoading();
             for (let address_elem of address_list) {
