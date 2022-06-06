@@ -106,7 +106,8 @@ async function extractTravelTime(origin, destination, transport_mode, arrival_ti
     if (apiResponse.status === "OK") {
         return apiResponse.routes[0].legs[0].duration.text;
     } else {
-        return "Error: " + apiResponse.status;
+        alert(`Error: ${apiResponse.status}\nPlease check the addresses used and try again.`);
+        return "Error: Please check the address.";
     }
 }
 
