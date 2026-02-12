@@ -25,12 +25,13 @@ jobs:
       - name: Build extension package
         id: build
         run: |
-          ./scripts/package-extension.sh dist
-          PACKAGE_PATH="dist/itineris-${{ steps.version.outputs.version }}.zip"
-          echo "package_path=$PACKAGE_PATH" >> "$GITHUB_OUTPUT"
+          rm -rf package-root
+          mkdir -p package-root
+          rsync -a extension/ package-root/
+          test -f package-root/manifest.json
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: itineris-${{ steps.version.outputs.version }}
-          path: ${{ steps.build.outputs.package_path }}
+          path: package-root/*
