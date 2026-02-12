@@ -2,112 +2,114 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="assets/css/bulma.min.css">
-    <link href="assets/css/all.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n-document-title="app_name">Itineris</title>
+    <link rel="stylesheet" href="assets/css/all.min.css">
     <link rel="stylesheet" href="popup.css">
 </head>
 <body>
+<main class="popup-app">
+    <header class="app-header reveal">
+        <div class="brand-wrap">
+            <img src="assets/icons/64.png" alt="Itineris icon" class="brand-icon">
+            <div>
+                <h1 class="brand-title" data-i18n="app_name">Itineris</h1>
+                <p class="brand-subtitle" data-i18n="app_tagline">Compare your commutes in seconds.</p>
+            </div>
+        </div>
+        <span id="status_chip" class="status-chip idle" aria-live="polite" data-i18n="state_idle">Ready</span>
+    </header>
 
-<div class="container">
-    <div class="columns">
-        <div class="column">
-            <div id="extension_logo" class="box small">
-                <img src="assets/icons/128.png" alt="extension icon">
-            </div>
-        </div>
-        <div class="column">
-            <div id="transport_mode_container" class="box large">
-                <label class="label" for="transport_mode_select">Transport mode</label>
-                <div class="select">
-                    <select name="Transport mode" id="transport_mode_select">
-                        <option value="transit">Public transport</option>
-                        <option value="driving">Driving</option>
-                        <option value="walking">Walking</option>
-                        <option value="bicycling">Bicycling</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div id="arrival_time_container" class="column">
-            <div class="box large">
-                <label class="label">Arrival time</label>
-                <fieldset id="arrival_time_selects" class="hour_columns">
-                    <div class="select">
-                        <select name="Arrival hour" id="arrival_hour_select">
-                            <option value="00">00</option>
-                            <option value="01">01</option>
-                            <option value="02">02</option>
-                            <option value="03">03</option>
-                            <option value="04">04</option>
-                            <option value="05">05</option>
-                            <option value="06">06</option>
-                            <option value="07">07</option>
-                            <option value="08" selected="selected">08</option>
-                            <option value="09">09</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>
-                            <option value="17">17</option>
-                            <option value="18">18</option>
-                            <option value="19">19</option>
-                            <option value="20">20</option>
-                            <option value="21">21</option>
-                            <option value="22">22</option>
-                            <option value="23">23</option>
-                        </select>
-                    </div>
-                    <div class="select">
-                        <select name="Arrival minutes" id="arrival_minutes_select">
-                            <option value="00">00</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                            <option value="40">40</option>
-                            <option value="50">50</option>
-                        </select>
-                    </div>
-                </fieldset>
-            </div>
-        </div>
-        <div id="setup_container" class="column">
-            <div class="box small">
-                <label class="label" for="transport_mode_select">Destinations</label>
-                <button id="setup_button" class="button is-fullwidth is-dark">
-                    <span class="icon">
-                        <i class="fa-solid fa-address-book"></i>
-                    </span>
+    <section class="panel reveal">
+        <div id="message_banner" class="message-banner is-hidden" role="status" aria-live="polite"></div>
+
+        <div class="form-group">
+            <label for="address" class="field-label" data-i18n="origin_label">Origin address</label>
+            <div class="origin-input-wrap">
+                <input id="address" class="text-input" type="text" data-i18n-placeholder="origin_placeholder" placeholder="Enter your departure address" list="origin_suggestions" autocomplete="off">
+                <button
+                    id="favorite_origin_button"
+                    class="ghost-icon-button"
+                    type="button"
+                    aria-label="Toggle favorite origin"
+                    title="Toggle favorite origin"
+                    data-i18n-aria-label="favorite_toggle_title"
+                    data-i18n-title="favorite_toggle_title"
+                >
+                    <i class="fa-solid fa-star" aria-hidden="true"></i>
                 </button>
             </div>
+            <datalist id="origin_suggestions"></datalist>
+            <div id="favorite_origins_list" class="favorite-list"></div>
         </div>
-    </div>
-    <div class="box">
-        <input id="address" class="input" type="text" placeholder="Enter an address">
-        <button id="address_button" class="button is-fullwidth is-primary">Compute travel times</button>
-    </div>
-    <div id="results_container" class="box is-hidden content">
-        <blockquote id="current_origin_address"></blockquote>
-        <div id="results_table_container" class="table-container">
-            <table id="results_table" class="table is-fullwidth is-striped is-hoverable">
+
+        <div class="controls-grid">
+            <label class="control-field" for="transport_mode_select">
+                <span data-i18n="transport_mode">Transport mode</span>
+                <select id="transport_mode_select" class="select-input">
+                    <option value="transit" data-i18n="transport_transit">Public transport</option>
+                    <option value="driving" data-i18n="transport_driving">Driving</option>
+                    <option value="walking" data-i18n="transport_walking">Walking</option>
+                    <option value="bicycling" data-i18n="transport_bicycling">Bicycling</option>
+                </select>
+            </label>
+
+            <label class="control-field" for="time_reference_select">
+                <span data-i18n="time_reference">Time reference</span>
+                <select id="time_reference_select" class="select-input">
+                    <option value="none" data-i18n="time_none">No time</option>
+                    <option value="departure" data-i18n="time_departure">Departure time</option>
+                    <option value="arrival" data-i18n="time_arrival">Arrival time</option>
+                </select>
+            </label>
+
+            <label class="control-field" for="arrival_hour_select">
+                <span data-i18n="hour_label">Hour</span>
+                <select id="arrival_hour_select" class="select-input"></select>
+            </label>
+
+            <label class="control-field" for="arrival_minutes_select">
+                <span data-i18n="minutes_label">Minutes</span>
+                <select id="arrival_minutes_select" class="select-input"></select>
+            </label>
+
+            <label class="control-field" for="max_duration_filter">
+                <span data-i18n="max_duration">Max duration (minutes)</span>
+                <input id="max_duration_filter" class="text-input" type="number" min="0" step="5" data-i18n-placeholder="max_duration_placeholder" placeholder="No filter">
+            </label>
+        </div>
+
+        <div class="action-row">
+            <button id="address_button" class="primary-button" type="button" data-i18n="compute_button">Compute travel times</button>
+            <button id="setup_button" class="secondary-button" type="button" data-i18n="manage_destinations_button">Manage destinations</button>
+        </div>
+    </section>
+
+    <section id="results_container" class="panel reveal is-hidden" aria-live="polite">
+        <div class="results-header">
+            <p id="current_origin_address" class="origin-line"></p>
+            <p id="results_meta" class="results-meta"></p>
+        </div>
+
+        <p id="results_empty_state" class="empty-state is-hidden" data-i18n="no_results_after_filter">No destination matches the current filter.</p>
+
+        <div class="table-wrap">
+            <table id="results_table" class="results-table">
                 <thead>
                 <tr>
-                    <th style="width: 310px">Address</th>
-                    <th>Travel time</th>
+                    <th data-i18n="destination_col">Destination</th>
+                    <th data-i18n="duration_col">Duration</th>
+                    <th data-i18n="status_col">Status</th>
+                    <th data-i18n="action_col">Action</th>
                 </tr>
                 </thead>
-                <tbody id="results_table_body">
-                </tbody>
+                <tbody id="results_table_body"></tbody>
             </table>
         </div>
-    </div>
-</div>
+    </section>
+</main>
+
+<script src="i18n.js"></script>
 <script src="popup.js"></script>
 </body>
 </html>
