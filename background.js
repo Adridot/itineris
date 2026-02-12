@@ -1,13 +1,12 @@
-let address_list = [];
-
-let distances = {
-    origin: "",
-    destinations: []
-}
-
 chrome.runtime.onInstalled.addListener(() => {
-    chrome.storage.sync.set({address_list});
-    chrome.storage.sync.set({distances});
+    chrome.storage.sync.get(["address_list", "distances"], (result) => {
+        if (!result.address_list) {
+            chrome.storage.sync.set({address_list: []});
+        }
+        if (!result.distances) {
+            chrome.storage.sync.set({distances: {origin: "", destinations: []}});
+        }
+    });
 });
 
 
