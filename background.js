@@ -23,10 +23,15 @@ function getDirection(origin, destination, transport_mode, arrival_time) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
-    }).then(response => response.json())
-        .then(data => {
-            return data
-        })
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+        return response.json();
+    }).catch(error => {
+        console.error('API request failed:', error);
+        return {status: "REQUEST_FAILED", error_message: error.message};
+    });
 }
 
 chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {

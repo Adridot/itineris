@@ -38,9 +38,13 @@ function addToStorage(name, address) {
         address: address
     };
     chrome.storage.sync.get("address_list", ({address_list}) => {
+        if (!address_list) {
+            address_list = [];
+        }
         address_list.push(address_elem);
-        chrome.storage.sync.set({address_list: address_list});
-        constructTable();
+        chrome.storage.sync.set({address_list: address_list}, () => {
+            constructTable();
+        });
     });
 }
 
@@ -69,26 +73,25 @@ add_button.addEventListener("click", () => {
 function deleteFromStorage(id) {
     chrome.storage.sync.get("address_list", ({address_list}) => {
         let new_address_list = address_list.filter(address_elem => address_elem.id !== id);
-        chrome.storage.sync.set({address_list: new_address_list});
-        constructTable();
+        chrome.storage.sync.set({address_list: new_address_list}, () => {
+            constructTable();
+        });
     });
 }
 
-function handleDeleteButton() {
-    chrome.storage.sync.get("address_list", ({address_list}) => {
-        for (let address_elem of address_list) {
-            document.getElementById(`delete_${address_elem.id}`).addEventListener("click", () => {
-                deleteFromStorage(address_elem.id);
-            });
-        }
-    });
+function handleDeleteButton(address_list) {
+    for (let address_elem of address_list) {
+        document.getElementById(`delete_${address_elem.id}`).addEventListener("click", () => {
+            deleteFromStorage(address_elem.id);
+        });
+    }
 }
 
 
 function constructTable() {
     clearTable();
     chrome.storage.sync.get("address_list", ({address_list}) => {
-        if (address_list.length === 0) {
+        if (!address_list || address_list.length === 0) {
             no_address_message.classList.remove('is-hidden');
             table.classList.add('is-hidden');
         } else {
@@ -97,9 +100,9 @@ function constructTable() {
             for (let address_elem of address_list) {
                 addressToHTML(address_elem);
             }
+            handleDeleteButton(address_list);
         }
     });
-    handleDeleteButton();
 }
 
 constructTable();

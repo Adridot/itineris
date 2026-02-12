@@ -26,8 +26,8 @@ function distancesToHTML(distances) {
         let travel_time_cell = document.createElement("td");
         let open_maps_button_cell = document.createElement("td");
 
-        name_cell.innerHTML = destination.name;
-        travel_time_cell.innerHTML = destination.travel_time;
+        name_cell.textContent = destination.name;
+        travel_time_cell.textContent = destination.travel_time;
         open_maps_button_cell.innerHTML = `
             <button id='open_maps_${destination.id}' class='open_maps_button button is-info is-outlined'>
                 <span>Open in Maps</span>
@@ -46,15 +46,20 @@ function distancesToHTML(distances) {
 
 function updateTable() {
     chrome.storage.sync.get("distances", ({distances}) => {
-        if (distances.origin === "") {
+        if (!distances || distances.origin === "") {
             document.getElementById("results_container").classList.add('is-hidden');
         } else {
             document.getElementById("results_container").classList.remove('is-hidden');
-            document.getElementById("current_origin_address").innerHTML = `The selected address is: <b>${distances.origin}</b>`;
+            document.getElementById("current_origin_address").textContent = "";
+            let label = document.createTextNode("The selected address is: ");
+            let bold = document.createElement("b");
+            bold.textContent = distances.origin;
+            document.getElementById("current_origin_address").appendChild(label);
+            document.getElementById("current_origin_address").appendChild(bold);
             distancesToHTML(distances);
+            handleOpenMapsButton();
         }
     });
-    handleOpenMapsButton()
 }
 
 function getMapsURL(origin, destination, transport_mode) {
@@ -79,6 +84,7 @@ function replaceEventListener(distances, destination, transport_mode) {
 function handleOpenMapsButton() {
     let transport_mode = document.getElementById("transport_mode_select").value;
     chrome.storage.sync.get("distances", ({distances}) => {
+        if (!distances || !distances.destinations) return;
         for (let destination of distances.destinations) {
             replaceEventListener(distances, destination, transport_mode)
         }
@@ -114,7 +120,7 @@ async function extractTravelTime(origin, destination, transport_mode, arrival_ti
 function getTravelTimes(origin, transport_mode, arrival_time) {
     let destinations = [];
     chrome.storage.sync.get("address_list", async ({address_list}) => {
-        if (address_list.length === 0) {
+        if (!address_list || address_list.length === 0) {
             alert("No addresses have been added yet.\nGo to the top-right corner button to add addresses.");
         } else {
             toggleLoading();
@@ -127,7 +133,7 @@ function getTravelTimes(origin, transport_mode, arrival_time) {
                     travel_time: travel_time
                 });
             }
-            await chrome.storage.sync.set({distances: {origin: origin, destinations: destinations}}).then(() => {
+            chrome.storage.sync.set({distances: {origin: origin, destinations: destinations}}, () => {
                 updateTable();
                 toggleLoading();
             });
