@@ -25,7 +25,8 @@ jobs:
       - name: Build extension package
         id: build
         run: |
-          PACKAGE_PATH="$(./scripts/package-extension.sh dist)"
+          ./scripts/package-extension.sh dist
+          PACKAGE_PATH="dist/itineris-${{ steps.version.outputs.version }}.zip"
           echo "package_path=$PACKAGE_PATH" >> "$GITHUB_OUTPUT"
 
       - name: Upload artifact

@@ -32,7 +32,7 @@ rm -f "$PACKAGE_PATH"
 
 (
   cd "$EXT_DIR"
-  zip -r "$PACKAGE_PATH" . \
+  zip -rq "$PACKAGE_PATH" . \
     -x "*.DS_Store" \
     -x "__MACOSX/*"
 )
