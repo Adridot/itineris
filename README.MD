@@ -29,16 +29,18 @@ Cas typique: recherche de logement, comparaison domicile-travail, optimisation d
 
 ## Architecture
 
-- `popup.html` / `popup.js` / `popup.css`  
+- `extension/popup.html` / `extension/popup.js` / `extension/popup.css`  
   UI principale de calcul de trajets.
-- `options.html` / `options.js` / `options.css`  
+- `extension/options.html` / `extension/options.js` / `extension/options.css`  
   Gestion des destinations et des preferences.
-- `background.js`  
+- `extension/background.js`  
   Service worker MV3, appels API, cache, bridge popup <-> backend.
-- `lambda_function.py`  
+- `backend/lambda_function.py`  
   Backend AWS Lambda qui appelle Google Routes / Directions.
-- `i18n.js` + `_locales/*/messages.json`  
+- `extension/i18n.js` + `extension/_locales/*/messages.json`  
   Couche de traduction centralisee.
+- `.github/workflows/package.yml` + `scripts/package-extension.sh`  
+  Packaging CI de l'extension en zip.
 
 ## Installation locale (dev)
 
@@ -46,7 +48,7 @@ Cas typique: recherche de logement, comparaison domicile-travail, optimisation d
 2. Ouvrir `chrome://extensions`.
 3. Activer le mode developpeur.
 4. Cliquer "Charger l'extension non empaquetee".
-5. Selectionner le dossier du repo.
+5. Selectionner le dossier `extension/`.
 
 ## Configuration backend (AWS + Google)
 
@@ -117,21 +119,21 @@ Le cache:
 ## Internationalisation
 
 - Fichiers:
-  - `_locales/en/messages.json`
-  - `_locales/fr/messages.json`
-- `manifest.json` utilise:
+  - `extension/_locales/en/messages.json`
+  - `extension/_locales/fr/messages.json`
+- `extension/manifest.json` utilise:
   - `"default_locale": "en"`
   - champs `name/description/title` via `__MSG_*__`
-- UI: attributs `data-i18n*` + helper `i18n.js`.
+- UI: attributs `data-i18n*` + helper `extension/i18n.js`.
 
 ## Qualite / verification
 
 Checks utiles:
 
-- `node --check popup.js`
-- `node --check options.js`
-- `node --check background.js`
-- `python3 -m py_compile lambda_function.py`
+- `node --check extension/popup.js`
+- `node --check extension/options.js`
+- `node --check extension/background.js`
+- `python3 -m py_compile backend/lambda_function.py`
 
 ## Publication V2
 

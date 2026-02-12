@@ -1,2 +1,5 @@
 .idea/
 *.iml
+dist/
+__pycache__/
+*.pyc
