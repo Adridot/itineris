@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itineris Privacy Policy</title>
+    <style>
+        :root {
+            --bg: #f6f9fc;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #4b5563;
+            --line: #d6dee8;
+            --accent: #0f766e;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.55;
+        }
+
+        .page {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 16px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        h1 {
+            color: #0b4f4a;
+        }
+
+        h2 {
+            margin-top: 28px;
+            color: #153e75;
+            font-size: 1.12rem;
+        }
+
+        p, li {
+            color: var(--text);
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<main class="page">
+    <article class="card">
+        <h1>Itineris Privacy Policy</h1>
+        <p class="muted">Last updated: February 12, 2026</p>
+
+        <p>
+            This Privacy Policy explains how the Itineris Chrome extension ("Itineris", "we", "our")
+            handles user data.
+        </p>
+
+        <h2>1. What Itineris does</h2>
+        <p>
+            Itineris compares travel times from one origin address to multiple saved destinations,
+            based on selected transport mode and optional departure or arrival time.
+        </p>
+
+        <h2>2. Data we process</h2>
+        <p>To provide the core functionality, Itineris processes the following user-provided data:</p>
+        <ul>
+            <li>Origin addresses</li>
+            <li>Saved destination names and addresses</li>
+            <li>Favorite origins and origin history</li>
+            <li>User preferences (transport mode, time options, filters, cache settings)</li>
+            <li>Route request parameters required to compute travel times</li>
+        </ul>
+
+        <h2>3. Where data is stored</h2>
+        <ul>
+            <li>
+                <strong>Local and synced extension storage:</strong> Itineris stores destinations,
+                preferences, favorites, and recent results in Chrome storage (`chrome.storage.sync`
+                and `chrome.storage.local`).
+            </li>
+            <li>
+                <strong>Backend processing:</strong> When you request travel times, the extension sends
+                request data to our backend endpoint hosted on AWS Lambda, which then queries Google Maps
+                routing services to return results.
+            </li>
+        </ul>
+
+        <h2>4. How data is used</h2>
+        <p>Data is used only to provide and improve the extension's route-comparison functionality, including:</p>
+        <ul>
+            <li>Computing travel times for your requested routes</li>
+            <li>Displaying sorted route results in the extension UI</li>
+            <li>Remembering your saved destinations and preferences</li>
+            <li>Reducing repeated requests through local caching</li>
+        </ul>
+
+        <h2>5. Data sharing</h2>
+        <p>
+            We do not sell personal data. We do not use your data for advertising or credit-scoring purposes.
+            Data is shared only as needed to provide the core service:
+        </p>
+        <ul>
+            <li>AWS (hosting and backend execution)</li>
+            <li>Google Maps routing APIs (route computation)</li>
+        </ul>
+
+        <h2>6. Permissions used by the extension</h2>
+        <ul>
+            <li><strong>storage:</strong> to save destinations, preferences, favorites, and cache entries</li>
+            <li>
+                <strong>host access:</strong> limited to the declared backend API host used to request route data
+            </li>
+        </ul>
+
+        <h2>7. Remote code</h2>
+        <p>
+            Itineris does not execute remote JavaScript or remote Wasm code. Executable code is packaged
+            with the extension.
+        </p>
+
+        <h2>8. Your controls</h2>
+        <p>You can control and remove your data at any time by:</p>
+        <ul>
+            <li>Editing or deleting destinations in the Options page</li>
+            <li>Clearing favorites and cache from the Options page</li>
+            <li>Removing the extension from Chrome</li>
+        </ul>
+
+        <h2>9. Policy updates</h2>
+        <p>
+            We may update this Privacy Policy to reflect product or compliance changes.
+            The "Last updated" date will be revised when updates are made.
+        </p>
+
+        <h2>10. Contact</h2>
+        <p>
+            For privacy questions, please contact us via:
+            <a href="https://github.com/Adridot/itineris/issues" target="_blank" rel="noopener noreferrer">
+                https://github.com/Adridot/itineris/issues
+            </a>
+        </p>
+    </article>
+</main>
+</body>
+</html>
