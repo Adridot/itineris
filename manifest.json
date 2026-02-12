@@ -1,8 +1,9 @@
 {
-  "name": "Itineris",
-  "description": "Find the travel time to many destinations from one place!",
-  "version": "1.2",
+  "name": "__MSG_extension_name__",
+  "description": "__MSG_extension_description__",
+  "version": "2.0.0",
   "manifest_version": 3,
+  "default_locale": "en",
   "background": {
     "service_worker": "background.js"
   },
@@ -13,6 +14,7 @@
     "https://na1x86jgj8.execute-api.eu-west-3.amazonaws.com/*"
   ],
   "action": {
+    "default_title": "__MSG_action_title__",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "assets/icons/16.png",
