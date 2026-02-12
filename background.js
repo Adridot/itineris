@@ -16,18 +16,31 @@ function getDirection(origin, destination, transport_mode, arrival_time) {
         destination: destination,
         transport_mode: transport_mode,
         arrival_time: arrival_time
-    }
+    };
+
     return fetch('https://na1x86jgj8.execute-api.eu-west-3.amazonaws.com/default/directionsSecurity', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Extension-Id': chrome.runtime.id
         },
         body: JSON.stringify(body)
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
+    }).then(async response => {
+        let payload = {};
+        try {
+            payload = await response.json();
+        } catch (e) {
+            payload = {};
         }
-        return response.json();
+
+        if (!response.ok) {
+            return {
+                status: payload.status || "REQUEST_FAILED",
+                error_message: payload.error || payload.error_message || `HTTP error: ${response.status}`
+            };
+        }
+
+        return payload;
     }).catch(error => {
         console.error('API request failed:', error);
         return {status: "REQUEST_FAILED", error_message: error.message};

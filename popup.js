@@ -95,11 +95,11 @@ function handleOpenMapsButton() {
 async function callAPI(origin, destination, transport_mode, arrival_time) {
     let message = {
         name: "distance",
-        origin: encodeURIComponent(origin),
-        destination: encodeURIComponent(destination),
-        transport_mode: encodeURIComponent(transport_mode),
-        arrival_time: encodeURIComponent(arrival_time)
-    }
+        origin: origin,
+        destination: destination,
+        transport_mode: transport_mode,
+        arrival_time: arrival_time
+    };
     return new Promise((resolve) => {
         chrome.runtime.sendMessage(message, (response) => {
             resolve(response);
@@ -109,10 +109,19 @@ async function callAPI(origin, destination, transport_mode, arrival_time) {
 
 async function extractTravelTime(origin, destination, transport_mode, arrival_time) {
     const apiResponse = await callAPI(origin, destination, transport_mode, arrival_time);
-    if (apiResponse.status === "OK") {
+    if (
+        apiResponse.status === "OK" &&
+        apiResponse.routes &&
+        apiResponse.routes[0] &&
+        apiResponse.routes[0].legs &&
+        apiResponse.routes[0].legs[0] &&
+        apiResponse.routes[0].legs[0].duration &&
+        apiResponse.routes[0].legs[0].duration.text
+    ) {
         return apiResponse.routes[0].legs[0].duration.text;
     } else {
-        alert(`Error: ${apiResponse.status}\nPlease check the addresses used and try again.`);
+        const errorMessage = apiResponse.error_message ? `\n${apiResponse.error_message}` : "";
+        alert(`Error: ${apiResponse.status || "REQUEST_FAILED"}\nPlease check the addresses used and try again.${errorMessage}`);
         return "Error: Please check the address.";
     }
 }
