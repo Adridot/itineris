@@ -164,6 +164,9 @@ def validate_request(request_body):
     destination = maybe_unquote(str(request_body.get("destination", "")).strip())
     transport_mode = maybe_unquote(str(request_body.get("transport_mode", "")).strip().lower())
     arrival_time = str(request_body.get("arrival_time", "")).strip()
+    departure_time = str(request_body.get("departure_time", "")).strip()
+    time_reference = maybe_unquote(str(request_body.get("time_reference", "")).strip().lower())
+    time_value = str(request_body.get("time_value", "")).strip()
 
     if not origin:
         raise ValueError("Field origin cannot be empty.")
@@ -174,20 +177,41 @@ def validate_request(request_body):
             "Invalid transport_mode. Allowed values: driving, walking, bicycling, transit."
         )
 
-    if transport_mode == "transit":
-        if not arrival_time:
-            raise ValueError("arrival_time is required when transport_mode is transit.")
-        if not arrival_time.isdigit():
-            raise ValueError("arrival_time must be a Unix timestamp in seconds.")
+    # New payload style: time_reference + time_value
+    if time_reference:
+        if time_reference not in {"none", "arrival", "departure"}:
+            raise ValueError("time_reference must be one of: none, arrival, departure.")
+        if time_reference == "none":
+            arrival_time = ""
+            departure_time = ""
+        else:
+            if not time_value:
+                raise ValueError("time_value is required when time_reference is arrival or departure.")
+            if not time_value.isdigit():
+                raise ValueError("time_value must be a Unix timestamp in seconds.")
+            if time_reference == "arrival":
+                arrival_time = time_value
+                departure_time = ""
+            else:
+                departure_time = time_value
+                arrival_time = ""
 
     if arrival_time and not arrival_time.isdigit():
         raise ValueError("arrival_time must be a Unix timestamp in seconds.")
+    if departure_time and not departure_time.isdigit():
+        raise ValueError("departure_time must be a Unix timestamp in seconds.")
+
+    if arrival_time and departure_time:
+        raise ValueError("Use either arrival_time or departure_time, not both.")
+    if arrival_time and transport_mode != "transit":
+        raise ValueError("arrival_time is only supported with transit mode.")
 
     return {
         "origin": origin,
         "destination": destination,
         "transport_mode": transport_mode,
         "arrival_time": arrival_time,
+        "departure_time": departure_time,
     }
 
 
@@ -253,8 +277,10 @@ def get_routes_api_directions(request):
         "languageCode": "en",
         "units": "METRIC",
     }
-    if request["transport_mode"] == "transit" and request["arrival_time"]:
+    if request["arrival_time"]:
         payload["arrivalTime"] = unix_to_rfc3339(request["arrival_time"])
+    elif request["departure_time"]:
+        payload["departureTime"] = unix_to_rfc3339(request["departure_time"])
 
     routes_endpoint = "https://routes.googleapis.com/directions/v2:computeRoutes"
     routes_headers = {
@@ -346,6 +372,8 @@ def get_legacy_directions(request):
     }
     if request["arrival_time"]:
         params["arrival_time"] = request["arrival_time"]
+    elif request["departure_time"]:
+        params["departure_time"] = request["departure_time"]
 
     url = f"https://maps.googleapis.com/maps/api/directions/json?{urlencode(params)}"
 

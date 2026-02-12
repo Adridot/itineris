@@ -2,67 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Address book</title>
-    <link rel="stylesheet" href="assets/css/bulma.min.css">
-    <link href="assets/css/all.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n-document-title="title">Itineris Settings</title>
+    <link rel="stylesheet" href="assets/css/all.min.css">
     <link rel="stylesheet" href="options.css">
 </head>
 <body>
-<section class="section">
-    <div class="container">
-        <div class="header">
-            <img class="logo" src="assets/icons/128.png" alt="extension icon">
-            <div class="title_subtitle">
-                <h1 class="title">
-                    Itineris - Address book
-                </h1>
-                <h2 class="subtitle is-5">
-                    On this page, add the destinations you want to frequently go to. (ex: Work, School...)
-                </h2>
+<main class="options-app">
+    <header class="hero-section">
+        <div class="hero-brand">
+            <img src="assets/icons/128.png" alt="Itineris icon" class="hero-logo">
+            <div>
+                <h1 data-i18n="title">Itineris Settings</h1>
+                <p data-i18n="subtitle">Maintain your destinations and tune travel defaults.</p>
             </div>
         </div>
+    </header>
 
+    <div id="options_banner" class="message-banner is-hidden" role="status" aria-live="polite"></div>
 
-        <div class="box" id="add_container">
-            <div class="field">
-                <label class="label" for="name_input">Name</label>
-                <div class="control">
-                    <input class="input" id="name_input" type="text" placeholder="ex: Home">
-                </div>
+    <section class="layout-grid">
+        <article class="panel">
+            <div class="panel-header">
+                <h2 data-i18n="destinations_title">Destinations</h2>
+                <span id="destinations_count" class="count-chip">0</span>
             </div>
-            <div class="field last">
-                <label class="label" for="address_input">Address</label>
-                <div class="control">
-                    <input class="input" id="address_input" type="text" placeholder="ex: 2 rue de la Paix 75002 Paris">
-                </div>
+
+            <form id="add_form" class="destination-form">
+                <label class="field" for="name_input">
+                    <span data-i18n="name_label">Name</span>
+                    <input class="text-input" id="name_input" type="text" data-i18n-placeholder="name_placeholder" placeholder="Home" required>
+                </label>
+
+                <label class="field" for="address_input">
+                    <span data-i18n="address_label">Address</span>
+                    <input class="text-input" id="address_input" type="text" data-i18n-placeholder="address_placeholder" placeholder="2 rue de la Paix 75002 Paris" required>
+                </label>
+
+                <button id="add_button" class="primary-button" type="submit" data-i18n="add_button">Add destination</button>
+            </form>
+
+            <p id="no_address_message" class="empty-state is-hidden" data-i18n="empty_destinations">No destination saved yet.</p>
+
+            <div class="table-wrap">
+                <table id="table" class="destinations-table">
+                    <thead>
+                    <tr>
+                        <th data-i18n="table_name">Name</th>
+                        <th data-i18n="table_address">Address</th>
+                        <th data-i18n="table_actions">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table_body"></tbody>
+                </table>
             </div>
-            <button id="add_button" class="button is-success is-outlined">
-                <span>Add new address</span>
-                <span class="icon is-small">
-                    <i class="fa-solid fa-plus"></i>
-                </span>
-            </button>
-        </div>
+        </article>
 
+        <aside class="panel">
+            <h2 data-i18n="preferences_title">Preferences</h2>
 
-        <div class="box">
-            <p id="no_address_message" class="subtitle is-hidden">No address saved. Add one using the form above.</p>
-            <table id="table" class="table">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody id="table_body"></tbody>
-            </table>
-        </div>
-    </div>
-</section>
+            <div class="settings-grid">
+                <label class="field" for="default_transport_mode_select">
+                    <span data-i18n="default_transport">Default transport mode</span>
+                    <select id="default_transport_mode_select" class="select-input">
+                        <option value="transit" data-i18n="transport_transit">Public transport</option>
+                        <option value="driving" data-i18n="transport_driving">Driving</option>
+                        <option value="walking" data-i18n="transport_walking">Walking</option>
+                        <option value="bicycling" data-i18n="transport_bicycling">Bicycling</option>
+                    </select>
+                </label>
+
+                <label class="field" for="default_time_reference_select">
+                    <span data-i18n="default_time_reference">Default time reference</span>
+                    <select id="default_time_reference_select" class="select-input">
+                        <option value="none" data-i18n="time_none">No time</option>
+                        <option value="departure" data-i18n="time_departure">Departure time</option>
+                        <option value="arrival" data-i18n="time_arrival">Arrival time</option>
+                    </select>
+                </label>
+
+                <label class="field" for="default_hour_select">
+                    <span data-i18n="default_hour">Default hour</span>
+                    <select id="default_hour_select" class="select-input"></select>
+                </label>
+
+                <label class="field" for="default_minutes_select">
+                    <span data-i18n="default_minutes">Default minutes</span>
+                    <select id="default_minutes_select" class="select-input"></select>
+                </label>
+
+                <label class="field" for="max_duration_default_input">
+                    <span data-i18n="default_max_filter">Default max duration filter</span>
+                    <input id="max_duration_default_input" class="text-input" type="number" min="0" step="5" data-i18n-placeholder="max_duration_placeholder" placeholder="No filter">
+                </label>
+
+                <label class="field" for="cache_ttl_input">
+                    <span data-i18n="cache_ttl">Cache duration (minutes)</span>
+                    <input id="cache_ttl_input" class="text-input" type="number" min="1" max="120" step="1" placeholder="10">
+                </label>
+            </div>
+
+            <div class="button-stack">
+                <button id="save_settings_button" class="primary-button" type="button" data-i18n="save_preferences">Save preferences</button>
+                <button id="reset_settings_button" class="secondary-button" type="button" data-i18n="reset_preferences">Reset preferences</button>
+                <button id="clear_cache_button" class="secondary-button" type="button" data-i18n="clear_cache">Clear API cache</button>
+            </div>
+
+            <div class="favorites-block">
+                <h3 data-i18n="favorite_origins">Favorite origins</h3>
+                <p id="no_favorite_message" class="small-note" data-i18n="no_favorites">No favorite origin yet.</p>
+                <div id="favorite_origins_list" class="favorite-list"></div>
+                <button id="clear_favorites_button" class="danger-link is-hidden" type="button" data-i18n="clear_favorites">Clear favorites</button>
+            </div>
+        </aside>
+    </section>
+</main>
+
+<script src="i18n.js"></script>
 <script src="options.js"></script>
 </body>
 </html>

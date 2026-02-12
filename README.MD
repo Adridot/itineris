@@ -1,45 +1,146 @@
-![](assets/icons/64.png)
-# Itineris 
-### Find the travel time to many destinations from one place!
+# Itineris V2
 
-Chrome web store link: [https://chrome.google.com/webstore/detail/pffdkfppfngeiijdkcipdmpmabfkiapk](https://chrome.google.com/webstore/detail/pffdkfppfngeiijdkcipdmpmabfkiapk?authuser=0&hl=fr)
+Extension Chrome pour comparer rapidement les temps de trajet entre une origine et plusieurs destinations en une seule action.
 
-This browser extension will help you whenever you need to frequently research for traveling times between the same places.
-The best example is when looking for a new place to live. You would want to know how long it takes to go from this fancy place you found online to work, to your parent's or friends houses.
+Chrome Web Store (version publiee actuelle):  
+`https://chrome.google.com/webstore/detail/pffdkfppfngeiijdkcipdmpmabfkiapk`
 
-The steps are very simple:
-1. Go to the options page and add the frequent addresses. (provide enough details for the app to know the exact place you are looking for)
-2. Find any address you want to check, open the extension, select the way of travelling, the time if needed, and enter the address !
-3. Wait for a few seconds and... tadam! You will have your results.
+## Objectif
 
-## API setup (AWS Lambda + Google Maps)
+Itineris sert a repondre a une question simple:  
+"Depuis une adresse donnee, combien de temps me faut-il pour rejoindre mes lieux frequents ?"
 
-The extension calls the AWS API endpoint from the background service worker.
+Cas typique: recherche de logement, comparaison domicile-travail, optimisation de deplacements recurrents.
 
-### 1) Lambda environment variables
+## Nouveautes V2
 
-Set these variables on the Lambda function:
+- Refonte complete du popup (UI plus lisible, etats explicites, meilleure ergonomie).
+- Refonte complete de la page options.
+- Edition inline des destinations dans les options.
+- Origines favorites et suggestions d'historique.
+- Filtre optionnel de duree max.
+- Gestion des references horaires: sans horaire, depart, arrivee.
+- Internationalisation native Chrome (`_locales/en`, `_locales/fr`).
+- Cache API local avec TTL configurable.
+- Backend Lambda modernise:
+  - Google Routes API prioritaire.
+  - Fallback Google Directions API legacy.
+  - Validation d'entree et CORS durci pour extension Chrome.
 
-- `GOOGLE_API_PREFERRED=routes`
-- `ENABLE_DIRECTIONS_FALLBACK=true`
-- `GOOGLE_ROUTES_API_KEY=...` (recommended)
-- `GOOGLE_DIRECTIONS_API_KEY=...` (fallback / legacy)
-- `AUTHORIZED_ORIGINS=chrome-extension://<YOUR_EXTENSION_ID>`
-- `AUTHORIZED_EXTENSION_IDS=<YOUR_EXTENSION_ID>`
+## Architecture
 
-Notes:
-- `Directions API` is legacy. `Routes API` is preferred.
-- You can keep both APIs enabled during transition.
+- `popup.html` / `popup.js` / `popup.css`  
+  UI principale de calcul de trajets.
+- `options.html` / `options.js` / `options.css`  
+  Gestion des destinations et des preferences.
+- `background.js`  
+  Service worker MV3, appels API, cache, bridge popup <-> backend.
+- `lambda_function.py`  
+  Backend AWS Lambda qui appelle Google Routes / Directions.
+- `i18n.js` + `_locales/*/messages.json`  
+  Couche de traduction centralisee.
 
-### 2) API Gateway CORS
+## Installation locale (dev)
 
-Configure CORS on your API Gateway route:
+1. Cloner le repo.
+2. Ouvrir `chrome://extensions`.
+3. Activer le mode developpeur.
+4. Cliquer "Charger l'extension non empaquetee".
+5. Selectionner le dossier du repo.
 
-- Methods: `OPTIONS, POST`
-- Allowed headers: `Content-Type, X-Extension-Id`
-- Allowed origin: `chrome-extension://<YOUR_EXTENSION_ID>`
+## Configuration backend (AWS + Google)
 
-### 3) Chrome extension ID
+### Prerequis Google Cloud
 
-The runtime ID is sent in header `X-Extension-Id`.
-To keep a stable ID between builds, publish on Chrome Web Store (or use a fixed manifest key strategy).
+- Activer `Routes API` (recommande).
+- Optionnel: activer `Directions API` pour fallback legacy.
+- Creer une cle API restreinte par service.
+
+### Variables d'environnement Lambda
+
+- `GOOGLE_API_PREFERRED=routes`  
+  Valeurs possibles: `routes` ou `directions`.
+- `ENABLE_DIRECTIONS_FALLBACK=true`  
+  Fallback vers Directions si Routes renvoie certaines erreurs.
+- `GOOGLE_ROUTES_API_KEY=...`
+- `GOOGLE_DIRECTIONS_API_KEY=...`
+- `AUTHORIZED_ORIGINS=chrome-extension://<EXTENSION_ID>`
+- `AUTHORIZED_EXTENSION_IDS=<EXTENSION_ID>`
+
+Option de dev temporaire:
+
+- `AUTHORIZED_ORIGINS=*` (a eviter en production).
+
+### API Gateway (CORS)
+
+Configurer la route API:
+
+- Methodes: `OPTIONS, POST`
+- Headers autorises:  
+  `Content-Type, X-Amz-Date, X-Amz-Security-Token, Authorization, X-Api-Key, X-Requested-With, Accept, Origin, X-Extension-Id`
+- Origin autorisee: `chrome-extension://<EXTENSION_ID>`  
+  (ou plusieurs origines via la variable Lambda `AUTHORIZED_ORIGINS`)
+
+## Contrat API (extension -> Lambda)
+
+Payload POST minimal:
+
+```json
+{
+  "origin": "10 Downing St, London",
+  "destination": "King's Cross Station, London",
+  "transport_mode": "transit",
+  "time_reference": "arrival",
+  "time_value": "1739361600"
+}
+```
+
+`transport_mode` accepte: `driving`, `walking`, `bicycling`, `transit`.
+
+## Stockage et cache
+
+- `chrome.storage.sync`:
+  - `address_list`
+  - `distances`
+  - `origin_history`
+  - `favorite_origins`
+  - `user_settings`
+- `chrome.storage.local`:
+  - entrees cache API (`api_cache_entry::...`)
+
+Le cache:
+
+- est scope par requete (origine, destination, mode, horaire),
+- respecte un TTL configurable (`cache_ttl_minutes`),
+- est purge automatiquement (TTL + nombre max d'entrees).
+
+## Internationalisation
+
+- Fichiers:
+  - `_locales/en/messages.json`
+  - `_locales/fr/messages.json`
+- `manifest.json` utilise:
+  - `"default_locale": "en"`
+  - champs `name/description/title` via `__MSG_*__`
+- UI: attributs `data-i18n*` + helper `i18n.js`.
+
+## Qualite / verification
+
+Checks utiles:
+
+- `node --check popup.js`
+- `node --check options.js`
+- `node --check background.js`
+- `python3 -m py_compile lambda_function.py`
+
+## Publication V2
+
+Le contenu de publication Store (description courte, longue, changelog, notes permissions) est fourni dans:
+
+- `STORE_LISTING_V2.md`
+
+## Notes de securite
+
+- Le backend refuse les origines non autorisees.
+- L'extension envoie `X-Extension-Id` a chaque requete.
+- Aucune cle Google n'est exposee dans l'extension (tout passe par Lambda).
