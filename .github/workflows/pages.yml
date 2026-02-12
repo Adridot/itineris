@@ -1,0 +1,59 @@
+name: Deploy Privacy Policy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "privacy-policy.html"
+      - ".github/workflows/pages.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build static files
+        run: |
+          mkdir -p _site
+          cp privacy-policy.html _site/privacy-policy.html
+          cat > _site/index.html <<'EOF'
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta http-equiv="refresh" content="0; url=./privacy-policy.html">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Itineris Privacy Policy</title>
+          </head>
+          <body>
+            <p>Redirecting to <a href="./privacy-policy.html">privacy policy</a>...</p>
+          </body>
+          </html>
+          EOF
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
