@@ -1,0 +1,36 @@
+name: Package Extension
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get extension version
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' manifest.json)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Package extension
+        run: |
+          zip -r itineris-${{ steps.version.outputs.version }}.zip . \
+            -x '.git/*' \
+            -x '.github/*' \
+            -x 'lambda_function.py' \
+            -x 'README.MD'
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: itineris-${{ steps.version.outputs.version }}
+          path: itineris-${{ steps.version.outputs.version }}.zip
